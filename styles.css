@@ -1,16 +1,18 @@
 :root {
-    --primary-color: #006B54;
-    --primary-dark: #004d3d;
-    --primary-light: #008066;
-    --accent-color: #FFB800;
-    --gradient-start: #005c48;
-    --gradient-end: #003d31;
+    --primary-color: #005B7F;
+    --primary-dark: #004666;
+    --primary-light: #0082B3;
+    --accent-color: #D4AF37;
+    --gradient-start: #004D69;
+    --gradient-end: #003347;
     --text-light: #FFFFFF;
-    --text-dark: #333333;
+    --text-dark: #2C3E50;
     --border-radius: 8px;
-    --glass-bg: rgba(255,255,255,0.08);
-    --glass-border: rgba(255,255,255,0.1);
+    --glass-bg: rgba(255,255,255,0.1);
+    --glass-border: rgba(255,255,255,0.15);
     --header-height: 60px;
+    --card-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    --button-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 * {
@@ -27,6 +29,7 @@ body {
     color: var(--text-dark);
     line-height: 1.6;
     min-height: 100vh;
+    overflow-y: overlay;
 }
 
 body::before {
@@ -53,8 +56,8 @@ body::before {
     margin: 0 auto 20px;
     padding: 30px;
     background: linear-gradient(135deg, 
-        rgba(0,77,61,0.95) 0%, 
-        rgba(0,61,49,0.95) 100%
+        rgba(0,70,102,0.95) 0%, 
+        rgba(0,51,71,0.95) 100%
     );
     border-radius: 15px;
     backdrop-filter: blur(10px);
@@ -137,14 +140,33 @@ body::before {
 }
 
 .nav-btn.active {
-    background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    box-shadow: var(--button-shadow);
 }
 
 .nav-btn:hover {
     background: rgba(255,255,255,0.15);
     transform: translateY(-1px);
+}
+
+/* 导航按钮图标样式 */
+.nav-btn::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 8px;
+}
+
+.nav-btn[href="index.html"]::before {
+    background-image: url('images/辉达logo.png');
+}
+
+.nav-btn[href="activity.html"]::before {
+    background-image: url('images/清风团队LOGO.png');
 }
 
 /* 响应式调整 */
@@ -159,6 +181,11 @@ body::before {
         width: 100%;
         justify-content: center;
         padding: 10px 20px;
+    }
+    
+    .nav-btn::before {
+        width: 18px;
+        height: 18px;
     }
 }
 
@@ -233,22 +260,37 @@ body::before {
     margin: 0 auto;
     padding: 0 20px;
     gap: 15px;
+    opacity: 0;
+    animation: pageLoad 0.8s ease-out forwards;
+}
+
+@keyframes pageLoad {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* 所有卡片的基础样式 */
 .card {
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.98);
     border-radius: var(--border-radius);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    box-shadow: var(--card-shadow);
     border: 1px solid rgba(255,255,255,0.2);
     overflow: hidden;
-    transition: all 0.3s ease;
-    animation: fadeIn 0.6s ease-out forwards;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: cardFadeIn 0.6s ease-out forwards;
+    backdrop-filter: blur(10px);
+    opacity: 0;
 }
 
 .card:hover {
-    box-shadow: var(--hover-shadow);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
 }
 
 /* 卡片标题统一样式 */
@@ -262,16 +304,44 @@ body::before {
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-/* 表格统一样式 */
+/* 优化表格样式 */
 .green-table {
     border-collapse: separate;
     border-spacing: 0;
-    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(0,91,127,0.1);
+}
+
+.green-table th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.green-table th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.green-table tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+.green-table tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+/* 添加表格行悬停效果 */
+.green-table tr {
+    transition: all 0.3s ease;
+}
+
+.green-table tr:hover {
+    background: rgba(0,91,127,0.05);
+    transform: translateX(5px);
 }
 
 .green-table th {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: white;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-light);
     padding: 12px;
     font-weight: 600;
     text-shadow: 0 1px 2px rgba(0,0,0,0.2);
@@ -285,11 +355,11 @@ body::before {
 }
 
 .green-table tr:hover td {
-    background: rgba(0,135,90,0.03);
+    background: rgba(0,91,127,0.05);
 }
 
 .green-table tr:nth-child(even) {
-    background: rgba(0,107,84,0.03);
+    background: rgba(0,91,127,0.02);
 }
 
 /* 注释区域统一样式 */
@@ -349,91 +419,61 @@ body::before {
     }
 }
 
-/* 滚动条美化 */
+/* 优化滚动体验 */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height);
+}
+
+/* 优化滚动条样式 */
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1);
-    border-radius: 6px;
+    background: rgba(0,91,127,0.05);
 }
 
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    border-radius: 6px;
-    border: 3px solid rgba(255,255,255,0.1);
+    border-radius: 5px;
+    border: 2px solid rgba(255,255,255,0.1);
 }
 
 /* 动画效果优化 */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.card {
-    animation: fadeIn 0.6s ease-out forwards;
-}
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
 
-/* 添加卡片内容渐变边框效果 */
-.bonus-type, .activity-content, .contact-info-box {
+/* 添加卡片内容过渡效果 */
+.card-content {
     position: relative;
-    border-radius: var(--border-radius);
-    background: linear-gradient(white, white) padding-box,
-                linear-gradient(135deg, rgba(0,135,90,0.3), transparent) border-box;
-    border: 1px solid transparent;
+    transition: all 0.3s ease;
 }
 
-/* 紧凑型表格样式 */
-.green-table.compact {
-    max-width: 300px;
-    margin: 0 auto;
+.card:hover .card-content {
+    transform: translateY(-5px);
 }
 
-/* 紧凑型卡片样式 */
-.card.medium.compact {
-    grid-column: span 4;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
+/* 添加卡片阴影过渡 */
+.card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card.medium.compact .table-wrapper {
-    padding: 0;
-    margin: 0;
-}
-
-.card.medium.compact .green-table {
-    margin: 0;
-    width: 100%;
-}
-
-.card.medium.compact .green-table td,
-.card.medium.compact .green-table th {
-    padding: 8px;
-}
-
-.card.medium.compact .note {
-    padding: 10px;
-    margin: 0;
-    background: rgba(230,243,240,0.3);
-}
-
-.card.medium.compact .note p {
-    margin-bottom: 5px;
-    line-height: 1.4;
-}
-
-.card.medium.compact .note p:last-child {
-    margin-bottom: 0;
-}
-
-.card.medium.compact > *:not(h3) {
-    padding: 10px;
-}
-
-.card.medium.compact > *:last-child {
-    padding-bottom: 10px;
+.card:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
 }
 
 /* 添加工资卡片组样式 */
@@ -644,7 +684,7 @@ body::after {
 .team-name {
     font-size: 1.6em;
     font-weight: 600;
-    background: linear-gradient(to right, #ffffff, #a3ffeb, #ffffff);
+    background: linear-gradient(to right, #ffffff, #e0e0e0, #ffffff);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -815,7 +855,7 @@ body::after {
     }
 }
 
-/* 导航和联系方式按钮组容器 */
+/* 导航按钮组和联系方式按钮组容器 */
 .nav-contact-container {
     display: flex;
     justify-content: center;
@@ -838,37 +878,20 @@ body::after {
     justify-content: center;
 }
 
-/* 导航按钮基础样式 */
+/* 导航按钮组和联系方式按钮组统一样式 */
+.nav-buttons, .contact-info {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* 统一按钮基础样式 */
 .nav-btn, .contact-item {
     padding: 8px 25px;
     border-radius: 20px;
     font-size: 0.95em;
     color: #fff;
     text-decoration: none;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* 导航按钮激活状态 */
-.nav-btn.active {
-    background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-}
-
-/* 联系方式按钮样式 */
-.contact-item {
-    padding: 8px 25px;
-    border-radius: 20px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 0.95em;
     letter-spacing: 1px;
     transition: all 0.3s ease;
     display: flex;
@@ -880,39 +903,27 @@ body::after {
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
-.contact-item.telegram {
-    background: linear-gradient(135deg, #0088cc, #006699);
+/* 导航按钮样式 */
+.nav-btn {
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
     border: 1px solid rgba(255,255,255,0.2);
 }
 
-.contact-item.qq {
-    background: linear-gradient(135deg, #12B7F5, #0C92C6);
+/* 导航按钮激活状态 */
+.nav-btn.active {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     border: 1px solid rgba(255,255,255,0.2);
 }
 
-.contact-item .icon {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-right: 6px;
-    border-radius: 4px;
-    background-color: rgba(255,255,255,0.15);
-    padding: 3px;
-}
-
-/* 联系方式按钮悬停和点击效果 */
-.contact-item:hover {
+/* 导航按钮和联系按钮统一的悬停效果 */
+.nav-btn:hover, .contact-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     filter: brightness(1.1);
 }
 
-.contact-item:active {
+/* 按钮点击效果 */
+.nav-btn:active, .contact-item:active {
     transform: translateY(1px);
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     filter: brightness(0.95);
@@ -920,19 +931,15 @@ body::after {
 
 /* 响应式调整 */
 @media (max-width: 768px) {
-    .contact-info {
+    .nav-buttons, .contact-info {
         flex-direction: column;
         width: 100%;
     }
     
-    .contact-item {
+    .nav-btn, .contact-item {
         width: 100%;
         padding: 10px 20px;
-    }
-    
-    .contact-item .icon {
-        width: 18px;
-        height: 18px;
+        min-width: unset;
     }
 }
 
@@ -948,11 +955,13 @@ body::after {
 }
 
 .link-btn.register {
-    background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-dark) 100%);
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .link-btn.login {
-    background: linear-gradient(135deg, #0088cc, #006699);
+    background: linear-gradient(135deg, #0088cc, #005580);
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 /* 响应式调整 */
@@ -1033,7 +1042,7 @@ body::after {
 }
 
 .link-btn.register {
-    background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-dark) 100%);
     border: 1px solid rgba(255,255,255,0.2);
 }
 
@@ -1121,11 +1130,11 @@ body::after {
 }
 
 .contact-btn.telegram {
-    background: linear-gradient(135deg, #0088cc, #006699);
+    background: linear-gradient(135deg, #0088cc, #005580);
 }
 
 .contact-btn.qq {
-    background: linear-gradient(135deg, #12B7F5, #0C92C6);
+    background: linear-gradient(135deg, #0CAEFF, #0988CC);
 }
 
 .contact-btn:hover {
@@ -1204,11 +1213,11 @@ body::after {
 }
 
 .contact-btn.telegram {
-    background: linear-gradient(135deg, #0088cc, #006699);
+    background: linear-gradient(135deg, #0088cc, #005580);
 }
 
 .contact-btn.qq {
-    background: linear-gradient(135deg, #12B7F5, #0C92C6);
+    background: linear-gradient(135deg, #0CAEFF, #0988CC);
 }
 
 /* 按钮悬停效果增强 */
@@ -1276,11 +1285,11 @@ body::after {
 }
 
 .contact-item.telegram {
-    background: linear-gradient(135deg, #0088cc, #006699);
+    background: linear-gradient(135deg, #0088cc, #005580);
 }
 
 .contact-item.qq {
-    background: linear-gradient(135deg, #12B7F5, #0C92C6);
+    background: linear-gradient(135deg, #0CAEFF, #0988CC);
 }
 
 /* 联系方式按钮悬停效果 */
@@ -1341,4 +1350,391 @@ body::after {
 .share-btn:active {
     transform: translateY(1px);
     filter: brightness(0.95);
+}
+
+.contact-item, .link-btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-item:hover, .link-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* 添加加载动画 */
+.loading {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .links-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .contact-info {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 10px;
+    }
+    
+    .nav-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+
+/* 添加微妙的光效果 */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.1),
+        transparent
+    );
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.card:hover::before {
+    left: 100%;
+}
+
+/* 优化按钮反馈效果 */
+.nav-btn, .contact-item, .link-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+/* 添加点击波纹效果 */
+.nav-btn::after, .contact-item::after, .link-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255,255,255,0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.nav-btn:active::after, .contact-item:active::after, .link-btn:active::after {
+    animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(40, 40);
+        opacity: 0;
+    }
+}
+
+/* 优化响应式布局 */
+@media (max-width: 768px) {
+    :root {
+        --header-height: 50px;
+    }
+
+    .header {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .title-group {
+        gap: 5px;
+    }
+
+    .nav-contact-container {
+        margin: 15px 0;
+    }
+
+    .green-table {
+        font-size: 0.85em;
+    }
+
+    .green-table td, .green-table th {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card h3 {
+        font-size: 1.1em;
+        padding: 12px 15px;
+    }
+
+    .note {
+        font-size: 0.9em;
+        padding: 12px 15px;
+    }
+}
+
+/* 优化娱乐工资表格样式 */
+.card.full-width {
+    margin-bottom: 20px;
+}
+
+.card.full-width .green-table {
+    table-layout: fixed; /* 确保列宽均匀 */
+    width: 100%;
+}
+
+.card.full-width .green-table th,
+.card.full-width .green-table td {
+    text-align: center;
+    padding: 10px;
+    width: calc(100% / 6); /* 平均分配6列宽度 */
+}
+
+.card.full-width .green-table th:first-child,
+.card.full-width .green-table td:first-child {
+    width: 80px; /* 设置第一列固定宽度 */
+}
+
+/* 优化表格标题样式 */
+.card.full-width h3 {
+    font-size: 1.1em;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .card.full-width .green-table {
+        font-size: 0.85em;
+    }
+    
+    .card.full-width .green-table th,
+    .card.full-width .green-table td {
+        padding: 8px 4px;
+    }
+    
+    .card.full-width .green-table th:first-child,
+    .card.full-width .green-table td:first-child {
+        width: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card.full-width .green-table {
+        font-size: 0.8em;
+    }
+    
+    .card.full-width .green-table th,
+    .card.full-width .green-table td {
+        padding: 6px 2px;
+    }
+    
+    .card.full-width .green-table th:first-child,
+    .card.full-width .green-table td:first-child {
+        width: 50px;
+    }
+}
+
+/* 活动卡片组样式优化 */
+.activity-cards-group {
+    margin-bottom: 30px;
+}
+
+/* 活动卡片样式优化 */
+.activity-card {
+    background: rgba(255,255,255,0.98);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+/* 活动内容样式优化 */
+.activity-content {
+    padding: 20px;
+}
+
+/* 活动标题样式 */
+.activity-description h4,
+.activity-rules h4,
+.activity-rewards h4,
+.activity-special h4 {
+    color: var(--primary-color);
+    font-size: 1.1em;
+    margin: 20px 0 12px;
+    padding-left: 15px;
+    border-left: 4px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.activity-description h4:first-child {
+    margin-top: 0;
+}
+
+/* 活动描述文本样式 */
+.activity-description p,
+.activity-special p {
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin-bottom: 10px;
+    padding: 0 15px;
+}
+
+/* 活动规则列表样式 */
+.activity-rules ol {
+    padding-left: 35px;
+    margin: 10px 0;
+}
+
+.activity-rules li {
+    color: var(--text-dark);
+    line-height: 1.8;
+    margin-bottom: 8px;
+    padding-left: 5px;
+}
+
+/* 活动奖励表格样式优化 */
+.activity-rewards .green-table {
+    margin: 15px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.activity-rewards .green-table th {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    padding: 12px 15px;
+}
+
+.activity-rewards .green-table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+/* 特殊奖励样式 */
+.special-reward {
+    background: linear-gradient(135deg, rgba(0,91,127,0.05), rgba(0,91,127,0.02));
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border: 1px solid rgba(0,91,127,0.1);
+}
+
+.reward-note {
+    color: var(--primary-color);
+    font-style: italic;
+    margin-top: 10px;
+    padding: 0 15px;
+}
+
+/* 注意事项样式优化 */
+.activity-content .note {
+    margin-top: 20px;
+    background: rgba(0,91,127,0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(0,91,127,0.08);
+}
+
+.activity-content .note p {
+    margin: 8px 0;
+    position: relative;
+    padding-left: 20px;
+}
+
+.activity-content .note p:before {
+    content: '•';
+    position: absolute;
+    left: 8px;
+    color: var(--primary-color);
+}
+
+/* 分隔线样式 */
+.activity-content > div:not(:last-child) {
+    position: relative;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.activity-content > div:not(:last-child):after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    right: 15px;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0,91,127,0.1), 
+        transparent
+    );
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .activity-content {
+        padding: 15px;
+    }
+    
+    .activity-description h4,
+    .activity-rules h4,
+    .activity-rewards h4,
+    .activity-special h4 {
+        font-size: 1em;
+        padding-left: 12px;
+    }
+    
+    .activity-rules ol {
+        padding-left: 25px;
+    }
+    
+    .special-reward {
+        padding: 12px 15px;
+    }
+    
+    .activity-rewards .green-table th,
+    .activity-rewards .green-table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+/* 添加卡片悬停效果 */
+.activity-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activity-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* 添加内容块悬停效果 */
+.activity-content > div {
+    transition: transform 0.2s ease;
+}
+
+.activity-content > div:hover {
+    transform: translateX(5px);
 }
