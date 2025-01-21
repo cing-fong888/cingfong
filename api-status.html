@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动物运动会 - API状态</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <img src="images/支付宝logo.png" alt="支付宝" class="alipay-logo">
+                <h1>动物运动会</h1>
+            </div>
+            <!-- 添加时间显示区域 -->
+            <div class="current-time-container">
+                <div id="current-time" class="current-time"></div>
+            </div>
+            <div class="nav-buttons">
+                <a href="activity.html" class="nav-btn">
+                    <img src="images/清风团队LOGO.png" alt="" class="btn-icon">
+                    活动详情
+                </a>
+                <a href="index.html" class="nav-btn">
+                    <img src="images/辉达logo.png" alt="" class="btn-icon">
+                    待遇制度
+                </a>
+                <a href="api-status.html" class="nav-btn active">
+                    <img src="images/支付宝logo.png" alt="" class="btn-icon">
+                    动物运动会
+                </a>
+            </div>
+        </header>
+
+        <div class="api-status-container">
+            <!-- 最新比赛结果展示区域 -->
+            <div class="api-status-card">
+                <div class="status-overview">
+                    <h2>最新比赛结果</h2>
+                    <span class="status-indicator status-operational">实时更新</span>
+                </div>
+                <div class="results-container">
+                    <div id="error-message" class="error-message"></div>
+                    
+                    <!-- 当前期结果 -->
+                    <div class="current-results">
+                        <div class="section-header">
+                            <h3>当前期</h3>
+                            <span class="refresh-time">每60秒自动更新</span>
+                        </div>
+                        <div id="current-record" class="current-record-container"></div>
+                    </div>
+
+                    <!-- 日期选择器 -->
+                    <div class="date-selector">
+                        <div class="section-header">
+                            <h3>历史查询</h3>
+                        </div>
+                        <div class="date-input-container">
+                            <input type="date" id="historyDate" class="date-input">
+                            <button onclick="fetchHistoryByDate()" class="date-submit">
+                                <i class="search-icon"></i>
+                                查询
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 历史记录 -->
+                    <div class="history-results">
+                        <div class="section-header">
+                            <h3>历史记录</h3>
+                        </div>
+                        <div id="histories" class="histories-container"></div>
+                    </div>
+
+                    <!-- 统计数据 -->
+                    <div class="statistics-container">
+                        <div class="section-header">
+                            <h3>近100期统计</h3>
+                        </div>
+                        <div id="statistics" class="statistics-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2D视频卡片 -->
+            <div class="api-status-card">
+                <div class="status-overview">
+                    <h2>2D赛场实况</h2>
+                    <span class="status-indicator status-operational">运行正常</span>
+                </div>
+                <div class="video-container">
+                    <div class="loading-indicator">加载中...</div>
+                    <iframe src="https://game.bjcxe.com/?gid=1" 
+                            width="590" 
+                            height="600" 
+                            frameborder="0"
+                            allowfullscreen
+                            onload="this.previousElementSibling.style.display='none'"
+                            onerror="handleIframeError(this)">
+                    </iframe>
+                    <div class="iframe-error" style="display: none;">
+                        <p>视频加载失败，请尝试在新窗口中打开</p>
+                        <a href="https://game.bjcxe.com/?gid=1" target="_blank" class="open-new-window">
+                            <img src="images/支付宝logo.png" alt="" class="btn-icon">
+                            在新窗口中打开
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D视频卡片 -->
+            <div class="api-status-card">
+                <div class="status-overview">
+                    <h2>3D赛场实况</h2>
+                    <span class="status-indicator status-warning">需要新窗口打开</span>
+                </div>
+                <div class="video-container">
+                    <div class="iframe-error">
+                        <p>3D视图需要在新窗口中打开观看</p>
+                        <a href="https://3dgame.bjcxe.com/?gid=1" target="_blank" class="open-new-window">
+                            <img src="images/支付宝logo.png" alt="" class="btn-icon">
+                            在新窗口中打开
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 游戏介绍卡片（移到最后） -->
+            <div class="api-status-card game-intro">
+                <div class="status-overview">
+                    <h2>动物运动会（60秒）</h2>
+                    <span class="status-indicator status-info">游戏说明</span>
+                </div>
+                <div class="intro-container">
+                    <!-- 温馨提示 -->
+                    <div class="notice-section">
+                        <div class="notice-content">
+                            <h3>温馨提示</h3>
+                            <p>您的信任对我们非常重要！我们依据最新的监管要求制定了《互动赚彩分专区用户服务协议》、《法律声明及隐私权政策》，提醒您阅读。如您不同意上述协议的内容，或无法准确理解上述协议任何条款的含义，请不要进行后续操作。</p>
+                        </div>
+                    </div>
+
+                    <!-- 游戏介绍 -->
+                    <div class="game-rules">
+                        <h3>游戏动物介绍</h3>
+                        <p>支付宝动物运动会是线上模拟百米冲刺的比赛，参与比赛的动物包括：</p>
+                        <div class="animals-grid">
+                            <div class="animal-item">
+                                <span class="animal-number">1号选手</span>
+                                <span class="animal-name">饿小宝</span>
+                            </div>
+                            <div class="animal-item">
+                                <span class="animal-number">2号选手</span>
+                                <span class="animal-name">盒　马</span>
+                            </div>
+                            <div class="animal-item">
+                                <span class="animal-number">3号选手</span>
+                                <span class="animal-name">票　票</span>
+                            </div>
+                            <div class="animal-item">
+                                <span class="animal-number">4号选手</span>
+                                <span class="animal-name">虾　仔</span>
+                            </div>
+                            <div class="animal-item">
+                                <span class="animal-number">5号选手</span>
+                                <span class="animal-name">支小宝</span>
+                            </div>
+                            <div class="animal-item">
+                                <span class="animal-number">6号选手</span>
+                                <span class="animal-name">欢　猩</span>
+                            </div>
+                        </div>
+                        <p class="game-note">用户可以竞猜参赛小动物的排名，猜对即可获得相应奖励。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="api-results.js"></script>
+</body>
+</html> 
