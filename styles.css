@@ -93,7 +93,9 @@ iframe {
 
 @media (max-width: 768px) {
     .container {
-        padding: 10px;
+        padding: 0;
+        box-shadow: none;
+        background: transparent;
     }
     
     iframe {
@@ -106,7 +108,7 @@ iframe {
     text-align: center;
     color: white;
     margin: 0 auto 20px;
-    padding: 30px;
+    padding: 15px 10px;
     background: linear-gradient(135deg, 
         rgba(0,70,102,0.95) 0%, 
         rgba(0,51,71,0.95) 100%
@@ -279,8 +281,10 @@ iframe {
 /* 响应式调整 */
 @media (max-width: 768px) {
     .header {
-        padding: 20px;
-        margin: 10px;
+        padding: 15px 10px;
+        margin: 0 0 10px 0;
+        width: 100%;
+        border-radius: 0;
     }
     
     .logo {
@@ -1346,7 +1350,9 @@ body::after {
 
 @media (max-width: 768px) {
     .container {
-        padding: 0 15px;
+        padding: 0;
+        box-shadow: none;
+        background: transparent;
     }
     
     .links-grid {
@@ -1436,8 +1442,10 @@ body::after {
     }
 
     .header {
-        margin: 10px;
-        padding: 15px;
+        padding: 15px 10px;
+        margin: 0 0 10px 0;
+        width: 100%;
+        border-radius: 0;
     }
 
     .title-group {
@@ -1787,7 +1795,7 @@ body::after {
 
 /* 优化视频容器 */
 .video-container {
-    padding: 15px;
+    padding: 10px;
     background: #f8f9fa;
     position: relative;
 }
@@ -1896,16 +1904,15 @@ iframe {
 /* 响应式优化 */
 @media (max-width: 768px) {
     .api-status-container {
-        padding: 15px;
-        gap: 15px;
+        padding: 0 10px;
     }
 
     .status-overview {
-        padding: 15px 20px;
+        padding: 15px;
     }
 
     .video-container {
-        padding: 15px;
+        padding: 10px;
     }
 
     .history-item {
@@ -2265,7 +2272,8 @@ iframe {
 
 /* 时间显示样式 */
 .current-time-container {
-    margin: 15px 0;
+    margin: 10px 0;
+    width: calc(100% - 20px);
     padding: 10px 20px;
     background: rgba(255,255,255,0.1);
     border-radius: 20px;
@@ -2311,12 +2319,17 @@ iframe {
 @media (max-width: 768px) {
     /* 容器padding调整 */
     .container {
-        padding: 10px;
+        padding: 0;
+        box-shadow: none;
+        background: transparent;
     }
     
     /* 头部样式调整 */
     .header {
-        padding: 15px;
+        padding: 15px 10px;
+        margin: 0 0 10px 0;
+        width: 100%;
+        border-radius: 0;
     }
     
     /* logo大小调整 */
@@ -2357,13 +2370,16 @@ iframe {
     
     /* 卡片内边距调整 */
     .api-status-card {
-        padding: 15px;
+        padding: 0;
+        margin-bottom: 15px;
+        border-radius: 12px;
     }
     
     /* 日期选择器样式调整 */
     .date-input-container {
         flex-direction: column;
         gap: 10px;
+        padding: 0 10px;
     }
     
     .date-input, .date-submit {
@@ -2497,5 +2513,32 @@ iframe {
     .histories-container::-webkit-scrollbar-thumb {
         background: rgba(0,0,0,0.2);
         border-radius: 4px;
+    }
+}
+
+/* 优化移动端内容间距 */
+@media (max-width: 768px) {
+    .section-header {
+        padding: 10px 15px;
+        margin: 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .history-item {
+        padding: 12px;
+        margin: 8px 0;
+        border-radius: 8px;
+        background: #f8f9fa;
+    }
+    
+    .stat-item {
+        padding: 10px;
+        margin: 4px;
+        border-radius: 8px;
+    }
+    
+    body {
+        padding: 0;
+        background-color: #f4f4f4;
     }
 }
