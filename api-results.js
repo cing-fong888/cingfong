@@ -17,7 +17,9 @@ async function fetchLatestResults() {
 function updateResultsDisplay(data) {
     // 更新历史记录
     const historiesContainer = document.getElementById('histories');
-    historiesContainer.innerHTML = data.histories
+    // 限制显示最近10条记录
+    const recentHistories = data.histories.slice(0, 10);
+    historiesContainer.innerHTML = recentHistories
         .map(history => {
             // 格式化期号显示
             const issueNumber = formatIssueNumber(history.issue);
@@ -34,6 +36,17 @@ function updateResultsDisplay(data) {
                 </div>
             `;
         }).join('');
+    
+    // 添加查看更多按钮
+    if (data.histories.length > 10) {
+        historiesContainer.innerHTML += `
+            <div class="view-more">
+                <button onclick="loadMoreHistory()" class="view-more-btn">
+                    查看更多记录
+                </button>
+            </div>
+        `;
+    }
 
     // 更新当前记录
     const currentRecord = document.getElementById('current-record');
@@ -190,5 +203,13 @@ function handleIframeLoad(iframe) {
         iframe.contentWindow.location.href;
     } catch (e) {
         handleIframeError(iframe);
+    }
+}
+
+// 添加加载更多历史记录的函数
+function loadMoreHistory() {
+    const dateInput = document.getElementById('historyDate');
+    if (dateInput.value) {
+        fetchHistoryByDate();
     }
 } 
