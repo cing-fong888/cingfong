@@ -2542,3 +2542,95 @@ iframe {
         background-color: #f4f4f4;
     }
 }
+
+/* 移动端布局优化 */
+@media (max-width: 768px) {
+    /* 整体容器调整 */
+    .container {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    /* API状态容器调整 */
+    .api-status-container {
+        padding: 0;
+        margin: 0;
+    }
+
+    /* 卡片样式统一 */
+    .api-status-card {
+        margin: 10px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* 历史记录容器优化 */
+    .history-results {
+        max-height: 250px;
+        overflow-y: auto;
+        background: white;
+        margin: 10px;
+        border-radius: 12px;
+    }
+
+    /* 视频容器优化 */
+    .video-container {
+        margin: 10px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* 历史记录项样式 */
+    .history-item {
+        padding: 10px 15px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        margin: 0;
+    }
+
+    /* 移动端头部导航优化 */
+    .nav-buttons.mobile-stack {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    /* 状态概览调整 */
+    .status-overview {
+        padding: 12px 15px;
+        margin: 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    /* 游戏介绍部分优化 */
+    .game-intro {
+        margin: 10px;
+    }
+
+    /* 动物网格优化 */
+    .animals-grid.mobile-grid {
+        padding: 10px;
+        gap: 8px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 视频容器宽高比优化 */
+.video-aspect-ratio {
+    position: relative;
+    width: 100%;
+    padding-top: 75%;
+    background: #f8f9fa;
+    overflow: hidden;
+}
+
+/* 历史记录滚动条美化 */
+.history-results::-webkit-scrollbar {
+    width: 4px;
+}
+
+.history-results::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
