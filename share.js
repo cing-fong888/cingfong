@@ -39,6 +39,17 @@ function shareToWeibo() {
     window.open(`http://service.weibo.com/share/share.php?url=${currentUrl}&title=${title}`);
 }
 
+function shareToSkype() {
+    try {
+        const currentUrl = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent(document.title);
+        window.open(`skype:?chat&topic=${title}&text=${currentUrl}`);
+    } catch (error) {
+        console.error('分享到Skype失败：', error);
+        alert('分享失败，请稍后重试');
+    }
+}
+
 // 添加全局错误处理
 window.onerror = function(msg, url, lineNo, columnNo, error) {
     console.error('错误: ', msg, 'URL: ', url, '行号: ', lineNo);
