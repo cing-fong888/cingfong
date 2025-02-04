@@ -192,6 +192,47 @@ iframe {
     flex-wrap: wrap;
 }
 
+/* 添加数据资讯按钮特殊样式 */
+.nav-btn.data-info {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    border: 1px solid rgba(255,255,255,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn.data-info:hover {
+    background: linear-gradient(135deg, #1E88E5, #1565C0);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(33,150,243,0.3);
+}
+
+/* 添加闪光效果 */
+.nav-btn.data-info::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255,255,255,0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
 .nav-btn {
     display: flex;
     align-items: center;
@@ -205,18 +246,26 @@ iframe {
     transition: all 0.3s ease;
     min-width: 140px;
     justify-content: center;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 .nav-btn.active {
-    background: rgba(255,255,255,0.2);
-    border-color: rgba(255,255,255,0.3);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .nav-btn:hover {
     background: rgba(255,255,255,0.2);
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    filter: brightness(1.1);
+}
+
+.nav-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    filter: brightness(0.95);
 }
 
 /* 按钮图标样式 */
@@ -224,6 +273,7 @@ iframe {
     width: 20px;
     height: 20px;
     object-fit: contain;
+    filter: brightness(0) invert(1);
 }
 
 /* 响应式调整 */
@@ -231,11 +281,13 @@ iframe {
     .nav-buttons {
         flex-direction: column;
         gap: 10px;
+        padding: 0 15px;
     }
     
     .nav-btn {
         width: 100%;
         padding: 10px 20px;
+        font-size: 0.95em;
     }
     
     .btn-icon {
@@ -2633,4 +2685,48 @@ iframe {
 .history-results::-webkit-scrollbar-thumb {
     background: rgba(0,0,0,0.1);
     border-radius: 4px;
+}
+
+/* 文章内容样式 */
+.article-content {
+    padding: 20px;
+    line-height: 1.8;
+}
+
+.article-meta {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    color: #666;
+    font-size: 0.9em;
+}
+
+.article-meta span {
+    margin-right: 15px;
+}
+
+.article-paragraphs p {
+    margin-bottom: 15px;
+    text-indent: 2em;
+    color: #333;
+}
+
+.article-paragraphs p:last-child {
+    margin-bottom: 0;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .article-content {
+        padding: 15px;
+    }
+    
+    .article-meta {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .article-meta span {
+        display: block;
+    }
 }

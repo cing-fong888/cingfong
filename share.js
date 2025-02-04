@@ -22,9 +22,11 @@ function shareToWechat() {
 
 function shareToQQ() {
     try {
+        // 使用新的QQ分享链接格式
         const currentUrl = encodeURIComponent(window.location.href);
         const title = encodeURIComponent(document.title);
-        window.open(`http://connect.qq.com/widget/shareqq/index.html?url=${currentUrl}&title=${title}`);
+        const summary = encodeURIComponent("清风团队X辉达");
+        window.open(`mqqapi://share/to_fri?src_type=web&version=1&file_type=news&url=${currentUrl}&title=${title}&description=${summary}`);
     } catch (error) {
         console.error('分享到QQ失败：', error);
         alert('分享失败，请稍后重试');
